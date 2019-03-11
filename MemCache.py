@@ -4,9 +4,10 @@ import math
 
 tamCache=0
 TipoMap = ''
-TamBloco = 4
+TamBloco = 4 ###igual a 16 bytes == 2^4
+PolitSub=3
 
-def inicio(tCache,map,bloco):
+def inicio(tCache,map,subst):
 
     print("=-="*30)
     print("Escolha o Tamanho da cache :\n1º 1MB\n2º 2MB\n3º 4MB\n4º 8MB\n5º 16MB \n")
@@ -37,10 +38,22 @@ def inicio(tCache,map,bloco):
     elif(escolha2 == 4):
         map = "8-way"
     print("=-="*30)
+    escolha3=3
+    print("Escolha a Politica de Substituição :\n1º LRU\n2º FIFO\n")
+    while(escolha3<1 or escolha3>2):
+        escolha3=int(input("Escolha: "))
+    if (escolha3 == 1):
+        subst = "LRU"
+    else:
+        subst= "FIFO"
+    print("=-="*30)
     
-    return(tCache,map)
+    
+    return(tCache,map,subst)
 
-tamCache,TipoMap=inicio(tamCache,TipoMap,Tan)
+tamCache,TipoMap,PolitSub=inicio(tamCache,TipoMap,PolitSub)
+
+print(f'{tamCache}   {TipoMap}   {PolitSub}')
 
 
 
