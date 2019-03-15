@@ -3,13 +3,13 @@ import math
 "Algumas conta no codigo ja estão sendo 'puladas'"
 
 TamCache=0
-ConjMap = 10
+ConjMap = [0,0]
 TamBloco = 4 ###igual a 16 bytes == 2^4
 PolitSub= 3
 TamMem = 32
 mapeamento = ""
 
-def inicio(tCache,map,subst):
+def inicio(tCache,Nmap,subst):
 
     print("=-="*30)
     print("Escolha o Tamanho da cache :\n1º 1KB\n2º 2KB\n3º 4KB\n4º 8KB\n5º 16KB \n")
@@ -33,16 +33,20 @@ def inicio(tCache,map,subst):
         escolha2=int(input("Escolha : "))
     if (escolha2 == 1):
         map = "Direto"
-        Nmap = 0
+        Nmap[0] = 0
+        Nmap[1] = 1
     elif(escolha2 == 2):
         map = "2-way"
-        Nmap = 1
+        Nmap[0] = 1
+        Nmap[1] =2
     elif(escolha2 == 3):
         map = "4-way"
-        Nmap = 2
+        Nmap[0] = 2
+        Nmap[1] = 4
     elif(escolha2 == 4):
         map = "8-way"
-        Nmap = 3
+        Nmap[0] = 3
+        Nmap[1] = 8
     print("=-="*30)
     escolha3=3
     print("Escolha a Politica de Substituição :\n1º LRU\n2º FIFO\n")
@@ -59,20 +63,24 @@ def inicio(tCache,map,subst):
 
 def calculos(tamBloco,tamCache,tipoMap):
     numLinhasCache = tamCache-tamBloco
-    TamConj = tamBloco+tipoMap
-    NumConj = tamCache - TamConj
-    index = numLinhasCache
-    offSet = NumConj
+    TamConj = tamBloco+tipoMap[0]
+    NumConj = numLinhasCache - tipoMap[0]
+    index = NumConj
+    offSet = tamBloco
     Tag = 32-(index+offSet)
-    print("A tag tem {} bits, index tem {} bits, offset tem {} bits.".format(Tag,offSet,index))
+    print(f"\nNumero de linhas :{numLinhasCache}.\nNºConj :{NumConj}\nTam Conj:{TamConj}\n")
     print("=-="*30)
-    
+    print("A tag tem {} bits, index tem {} bits, offset tem {} bits.".format(Tag,index,offSet))
+    print("=-="*30)
+    return(numLinhasCache,index,offSet,Tag)
 
-
-tamCache,ConjMap,PolitSub,mapeamento=inicio(TamCache,ConjMap,PolitSub)
-print('Tamanho da Cache : 2^{}, Mapeamento : {} e Politca de Substituição : {}'.format(tamCache,mapeamento,PolitSub))
+TamCache,ConjMap,PolitSub,mapeamento=inicio(TamCache,ConjMap,PolitSub)
+print('Tamanho da Cache : 2^{}, Mapeamento : {} e Politca de Substituição : {}'.format(TamCache,mapeamento,PolitSub))
 print("=-="*30)
-calculos(TamBloco,tamCache,ConjMap,)
+NumLinhas,index1,offset1,Tag1=calculos(TamBloco,TamCache,ConjMap)
+
+cache = []
+
 
 
 
