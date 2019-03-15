@@ -87,7 +87,7 @@ MemReq = 0
 
 completa = False
 def Arquivo(index,offset,tag):
-    arquivo = open('trace1.txt','r')
+    arquivo = open('trace.txt','r')
     for i in arquivo:
         i = int(i, 16)
         i = bin(i)
@@ -97,6 +97,7 @@ def Arquivo(index,offset,tag):
         TagNew = str(i[0:len(i)-index])
         indexNew = int(indexNew, 2)
         TagNew = int(TagNew, 2)
+        MemReq +=1
         popular(TagNew,index)
         
 def popular(tag,index): 
@@ -111,12 +112,14 @@ def popular(tag,index):
                 cache[i][1] = tag
                 cache[i][2] = 0
                 cache[i][3] = 0
+                cachemiss += 1
                 sai = True
             elif sai == True:
                 break
             c+=1
             if c > len(cache):
                 completa = True
+    
 
 TamCache,ConjMap,PolitSub,mapeamento=inicio(TamCache,ConjMap,PolitSub)
 print('Tamanho da Cache : 2^{}, Mapeamento : {} e Politca de Substituição : {}'.format(TamCache,mapeamento,PolitSub))
