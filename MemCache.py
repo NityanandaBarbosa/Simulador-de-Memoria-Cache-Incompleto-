@@ -74,12 +74,40 @@ def calculos(tamBloco,tamCache,tipoMap):
     print("=-="*30)
     return(numLinhasCache,index,offSet,Tag)
 
+cache = []
+
+def geraCache(numLinhas,conjMap):
+    global cache
+    v=[0,0,0,0]
+    for i in range(numLinhas*conjMap[1]):
+        cache.append(v)
+        print(i)
+
+def Arquivo(index,offset,tag):
+    arquivo = open('trace.txt','r')
+    for i in arquivo:
+        i = int(i, 16)
+        i = bin(i)
+        i = str(i[2::])
+        i = str(i[0:32-offset])
+        indexNew = str(i[tag:])
+        TagNew = str(i[0:len(i)-index])
+        indexNew = int(indexNew, 2)
+        TagNew = int(TagNew, 2)
+        
+
+
+
 TamCache,ConjMap,PolitSub,mapeamento=inicio(TamCache,ConjMap,PolitSub)
 print('Tamanho da Cache : 2^{}, Mapeamento : {} e Politca de Substituição : {}'.format(TamCache,mapeamento,PolitSub))
 print("=-="*30)
 NumLinhas,index1,offset1,Tag1=calculos(TamBloco,TamCache,ConjMap)
+geraCache(NumLinhas,ConjMap)
 
-cache = []
+
+
+
+
 
 
 
